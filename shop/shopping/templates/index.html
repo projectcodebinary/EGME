@@ -1,0 +1,7 @@
+{% if user.is_authenticated %}
+      <span class="head_nav" ><form action="Logout" method = "POST">
+       {% csrf_token %}
+       {{form.as_p}}
+       <input type="submit" value="Logout">
+     </form></span>
+     {% endif %}
