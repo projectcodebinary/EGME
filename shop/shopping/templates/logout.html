@@ -1,11 +1,11 @@
-
+{% extends 'base.html' %}
 
 {% block content %}
 <body>
-	<form method = "POST" >
+	<form action="../Logout/" method = "POST">
 		{% csrf_token %}
-		{{form}}
-		<button type="submit"> submit</button>
+		{{form.as_p}}
+		<input type="submit" value="Logout">
 		
 	</form>
 		

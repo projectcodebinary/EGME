@@ -1,33 +1,8 @@
 from django import forms
-from phonenumber_field.modelfields import PhoneNumberField
-from .models import shopping
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout,Submit
+from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import  AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import UserCreationForm
 
-cat=(
-    ('order','Order'),('refund','Refund'),('delivery','Delivery'),('buying','Buying')
-    )
-class contact(forms.ModelForm):
-    class Meta:
-        model= shopping
-        fields =('name','mail','phone','Query','section')
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        
-        self.helper = FormHelper
-        self.helper.form_method = 'post'
-
-        self.helper.layout = Layout(
-            'name',
-            'mail',
-            'phone',
-            'Query',
-            'section',
-            Submit('submit','Submit')
-        )
-    
 class AuthenticationForm(forms.Form):
       username= forms.CharField(widget=forms.TextInput(
           attrs={
