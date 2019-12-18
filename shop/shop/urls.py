@@ -20,5 +20,6 @@ urlpatterns = [
     url(r'^home/$', views.Home, name = 'Home'),
     url(r'^Logout/home/$', views.Home, name = 'Home'),
     path('admin/', admin.site.urls),
+    url(r'^nav/$', views.nav , name = 'nav'),
   ]
 urlpatterns += staticfiles_urlpatterns()

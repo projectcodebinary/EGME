@@ -6,8 +6,9 @@ from django.contrib.auth import update_session_auth_hash
 from shopping.forms import RegisterForm
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
-
-
+from django.core.mail import send_mail
+from django.contrib import messages
+from django.conf import settings
 def Home(request):
 	return render(request, 'home.html', )
 
@@ -15,6 +16,11 @@ def SignUp(request):
 	if request.method == "POST":
 		form = RegisterForm(request.POST)
 		if form.is_valid():
+			emailvalue= form.cleaned_data.get("email")
+			# print(emailvalue)
+			send_mail('Hello','Hello there, today i tried to add a email verification code','coolbinary69@gmail.com',
+			[emailvalue],
+			fail_silently=False)
 			form.save()
 			return render(request, 'home.html')
 	else:
@@ -54,6 +60,8 @@ def ChangePassword(request):
 
 # Create your views here.
 
+def nav(request):
+	return render(request, 'nav.html', )
 
 
 

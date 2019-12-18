@@ -1,0 +1,122 @@
+
+{% load static %}
+<html>
+
+
+
+
+<body>
+    <div class="nav">
+      <div class="nav1">
+               <div class="left">
+                  <div class="logo"><img src=""></div>
+               </div>
+               <div class="right">
+                 <div class="navigation">
+                     <a href="#" class="aa"><div class="one"><br>Contact Us</div></a>
+                     <a href="#" class="aa"><div class="one"><br>Contact Us</div></a>
+                     <a href="#" class="aa"><div class="one"><br>Contact Us</div></a>
+                     <a href="#" class="aa"><div class="one"><br>Contact Us</div></a>
+                     <a href="#" class="aa"><div class="one"><br>Contact Us</div></a>
+                     <a href="#" class="aa"><div class="one"><br>Contact Us</div></a>
+                     {% if user.is_authenticated %}
+                     <a href="{% url 'signup' %}" class="aa"><div class="one"><br>LogIn</div></a>
+                     {%endif%}
+                     {% if not user.is_authenticated %}
+                     <a href="{% url 'logout' %}" class="aa"><div class="one"><br>Logout</div></a>
+                     {%endif%}
+                 </div>
+                 <div class="log"></div>
+               </div>
+
+          </div>
+        </div>
+<style>
+  
+    .aa{
+        text-decoration: none;;
+    }
+.col{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    height: 30%;
+    text-decoration: none;
+    background-color: white;
+}
+    .sp{
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .one:hover{
+        background-color: brown;
+    }
+    .one{
+        text-decoration: none;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: blueviolet;
+        width: 70%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: auto;
+        text-align: center;
+    }
+.navigation{
+            margin-left: auto;
+            margin-right: auto;
+            width: 80%;
+            height: 100%;
+            background-color: aliceblue;
+            display: grid;
+            grid-template-columns: auto  auto  auto  auto  auto  auto  auto  ;
+}
+
+
+.logo{
+            margin-left: auto;
+            margin-right: auto;
+            width: 40%;
+            height: 100%;
+            background-color: aliceblue;
+}
+body{
+     margin:auto;
+}
+.left{
+    float: left;
+    background-color: aqua;
+    width: 30%;
+    height: 100%;
+}
+.right{
+    background-color: black;
+    float: right;
+    width: 70%;
+    height: 100%;
+}
+.nav1{
+    height: 50px;
+    width: 100%;
+    background-color: yellow;
+}
+.nav2{
+    height: 100%;
+
+    margin-left: 50px;
+    background-color: red;
+}
+
+
+
+
+
+
+
+
+
+    </style>    
+</body>
+</html>

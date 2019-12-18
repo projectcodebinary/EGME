@@ -2,6 +2,7 @@ from django import forms
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from verified_email_field.forms import VerifiedEmailField
 
 class AuthenticationForm(forms.Form):
       username= forms.CharField(widget=forms.TextInput(
@@ -31,7 +32,7 @@ class RegisterForm(UserCreationForm):
             'placeholder': 'Email id',
             'padding': '10px'
     }
-))
+),label='email',required=True)
       first_name=forms.CharField(widget=forms.TextInput(
           attrs={
             'class':'form-control',

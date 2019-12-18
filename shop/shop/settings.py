@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -118,10 +119,21 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/pics/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# from .email_info import EMAIL_PORT,EMAIL_USE_TLS,EMAIL_HOST,EMAIL_PORT,EMAIL_HOST_PASSWORD,EMAIL_HOST_USER,EMAIL_HOST_PASSWORD
+
+
+
+EMAIL_USE_TLS=True
+EMAIL_USE_SSL=False
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST_USER='coolbinary69@gmail.com'
+EMAIL_HOST_PASSWORD='cooldude69@'
+EMAIL_PORT=587
