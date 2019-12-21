@@ -1,4 +1,6 @@
+
 {% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +9,13 @@
 </head>
 <body>	
 
-<div id="main">
+
+
+	<form method="POST">
+		{{ user_form }}
+		{{customer_form}}
+	</form>
+          <div id="main">
 
 		<div class="logo" >
 				<a href=""></a>
@@ -18,8 +26,6 @@
 	{% endif %}
 	
 	
-
-
 
         <div class="sign">
          <div class="cp">
@@ -43,10 +49,10 @@
 
 	<div class="iii">
 	<div class="bla"><a href="../Login" style="text-decoration: none;" class="a">Login</a></div> <br><br> 
+
 	<div class="bla"><a href="../SignUp" style="text-decoration: none;" class="a">Signup</a></div>
 </div>	 
 </div> 
-
 
 
 
@@ -133,6 +139,7 @@ body{
 
 </style>
 
+{% endblock %}
 </html>
 
 

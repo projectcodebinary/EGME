@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shopping',
     'phone_field',
-    'crispy_forms'
+    'crispy_forms',
+    # 'simple_email_confirmation',
 ]
 
 MIDDLEWARE = [
@@ -123,14 +124,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/pics/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# MEDIA_ROOT = BASE_DIR
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # from .email_info import EMAIL_PORT,EMAIL_USE_TLS,EMAIL_HOST,EMAIL_PORT,EMAIL_HOST_PASSWORD,EMAIL_HOST_USER,EMAIL_HOST_PASSWORD
 
 
-
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS=True
 EMAIL_USE_SSL=False
 EMAIL_HOST='smtp.gmail.com'

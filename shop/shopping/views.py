@@ -3,25 +3,54 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, Pass
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
-from shopping.forms import RegisterForm
+from shopping.forms import RegisterForm,Additem
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.conf import settings
+from django.core.mail import EmailMultiAlternatives 
+from django.contrib import messages 
+from django.core.mail import send_mail 
+from django.template.loader import get_template 
+from django.contrib.admin.views.decorators import staff_member_required
+from .forms import Additem
+from .models import additem
+
+def index(request):
+	return render(request, 'index.html')
+
 def Home(request):
-	return render(request, 'home.html', )
+	context = {}
+	user_form = RegisterForm(request.POST)
+	customer_form = AuthenticationForm(request.POST)
+	context.update	({
+		'user_form': user_form,
+		'customer_form': customer_form})
+					
+	return render(request, 'home.html',context )
 
 def SignUp(request):
 	if request.method == "POST":
 		form = RegisterForm(request.POST)
 		if form.is_valid():
+			message=('account created')
 			emailvalue= form.cleaned_data.get("email")
-			# print(emailvalue)
-			send_mail('Hello','Hello there, today i tried to add a email verification code','coolbinary69@gmail.com',
-			[emailvalue],
-			fail_silently=False)
+			username = form.cleaned_data['username']
+			# # print(emailvalue)
+			# send_mail('Hello','Hello there, today i tried to add a email verification code','coolbinary69@gmail.com',
+			# [emailvalue],
+			# fail_silently=False)
 			form.save()
+			htmly = get_template('index.html')
+			d = { 'username': username } 
+			subject, from_email, to = 'welcome', 'coolbinary69@gmail.com', emailvalue  
+			html_content = htmly.render(d)
+			msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
+			msg.attach_alternative(html_content, "text / html")
+			msg.send()
+			messages.success(request, f'Your account has been created ! You are now able to log in') 
+
 			return render(request, 'home.html')
 	else:
 		form = RegisterForm()
@@ -55,16 +84,19 @@ def ChangePassword(request):
 			return redirect('../home')
 	else:
 		form = PasswordChangeForm(request.user)
-	return render(request, 'changepassword.html', {'form':form})
-
+	return render(request,'password.html', {'form':form})
 
 # Create your views here.
 
 def nav(request):
 	return render(request, 'nav.html', )
 
-
-
-
-
-
+@staff_member_required
+def additem(request):
+	if request.method == "POST":
+		form=Additem(request.POST, request.FILES)
+		if form.is_valid():
+			print('jdbab')
+			form.save()
+	form=Additem()
+	return render(request,'additem.html',{'form':form})
