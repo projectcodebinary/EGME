@@ -13,7 +13,7 @@ from django.conf import settings
 
 
 urlpatterns = [
-    url(r'^additem/$',views.additem, name='additem'),
+    url(r'^additem/$',views.addditem, name='addditem'),
     url(r'^$',views.Home, name='home'),
     url(r'^SignUp/$', views.SignUp, name = 'signup'),
     url(r'^Login/$', views.Login, name = 'login'),

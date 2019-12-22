@@ -11,10 +11,10 @@
 
 
 
-	<form method="POST">
+	<!-- <form method="POST">
 		{{ user_form }}
 		{{customer_form}}
-	</form>
+	</form> -->
           <div id="main">
 
 		<div class="logo" >
@@ -54,7 +54,14 @@
 </div>	 
 </div> 
 
-
+<div>
+	  {% for items in Item.all %}
+	  
+<img src="{{items.pic.url}}">
+        <!-- <h2>{{ items.pic }}</h2> -->
+     
+	  {% endfor %}
+	</div>
 
 
 </body>

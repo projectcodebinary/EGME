@@ -16,6 +16,8 @@ from django.template.loader import get_template
 from django.contrib.admin.views.decorators import staff_member_required
 from .forms import Additem
 from .models import additem
+from django.shortcuts import render,get_object_or_404
+
 
 def index(request):
 	return render(request, 'index.html')
@@ -24,11 +26,21 @@ def Home(request):
 	context = {}
 	user_form = RegisterForm(request.POST)
 	customer_form = AuthenticationForm(request.POST)
+	Item=additem.objects.all()
+	print(Item)
 	context.update	({
 		'user_form': user_form,
-		'customer_form': customer_form})
+		'customer_form': customer_form,
+		'Item': Item
+	})
 					
 	return render(request, 'home.html',context )
+
+
+def nav(request):
+	Item=additem.objects.all()
+	return render(request, 'nav.html', {'Item':Item})
+
 
 def SignUp(request):
 	if request.method == "POST":
@@ -71,8 +83,8 @@ def Login(request):
 def Logout(request):
 	if request.method == 'POST':
 		logout(request)
-		return render(request, 'home.html')
-
+		return render(request, 'home.html') 
+	return render(request, 'home.html')
 
 @login_required(login_url="Login/")
 def ChangePassword(request):
@@ -89,10 +101,11 @@ def ChangePassword(request):
 # Create your views here.
 
 def nav(request):
-	return render(request, 'nav.html', )
+	Item=additem.objects.all()
+	return render(request, 'nav.html', {'Item':Item})
 
 @staff_member_required
-def additem(request):
+def addditem(request):
 	if request.method == "POST":
 		form=Additem(request.POST, request.FILES)
 		if form.is_valid():
