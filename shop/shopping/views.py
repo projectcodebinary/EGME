@@ -86,7 +86,7 @@ def Logout(request):
 		return render(request, 'home.html') 
 	return render(request, 'home.html')
 
-@login_required(login_url="Login/")
+@login_required(login_url="../Login/")
 def ChangePassword(request):
 	if request.method == 'POST':
 		form = PasswordChangeForm(request.user, request.POST)
@@ -113,3 +113,8 @@ def addditem(request):
 			form.save()
 	form=Additem()
 	return render(request,'additem.html',{'form':form})
+
+# @login_required(login_url="../Login/")
+def details(request,items):
+	Item=get_object_or_404(additem,pk=items)
+	return render(request, 'details.html', {'Item':Item})

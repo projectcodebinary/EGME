@@ -32,9 +32,6 @@
 	          {% if user.is_authenticated %}
 	 <span class="head_nav"><a href="../ChangePassword" " class="pp">Chage Password</a></span>
 	    </div>
-	 
-	      
-	 
 	 <div class="lg">
 	 <span class="head_nav" ><form action="../Logout/" method = "POST">
 		{% csrf_token %}
@@ -55,8 +52,7 @@
 </div> 
 
 <div>
-	  {% for items in Item.all %}
-	  
+	{% for items in Item.all %}
 <img src="{{items.pic.url}}">
         <!-- <h2>{{ items.pic }}</h2> -->
      

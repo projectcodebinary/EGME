@@ -8,6 +8,10 @@ class additem(models.Model):
     price = models.TextField()
     quantity=models.TextField()
     discount= models.TextField()
-
+    pic1 = models.ImageField()
+    pic2 = models.ImageField()
+    pic3 = models.ImageField()
+    pic4 = models.ImageField()
     def __str__(self):
         return self.name
+

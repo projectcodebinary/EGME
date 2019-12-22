@@ -11,7 +11,6 @@ from django.urls import include
 from django.conf.urls.static import static
 from django.conf import settings
 
-
 urlpatterns = [
     url(r'^additem/$',views.addditem, name='addditem'),
     url(r'^$',views.Home, name='home'),
@@ -24,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^nav/$', views.nav , name = 'nav'),
     url(r'^index/$', views.index , name = 'index'),
+    url(r'^details/(?P<items>[0-9]+)/$', views.details,name='details'),
   ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += staticfiles_urlpatterns()
