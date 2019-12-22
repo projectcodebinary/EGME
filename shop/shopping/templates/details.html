@@ -59,23 +59,22 @@
              </div> -->
 <br>
 <br>
-             <hr>
-             <br>
-
-            <div class="cat">
+             <!-- <hr>
+             <br> -->
+            <!-- <div class="cat">
                     <u>T-shirts for sale</u>
                     <br><br>    
-            </div>
+            </div> -->
+            <!-- <div class="dis"></div> -->
 
 
-
-                <div class="dis">
+               <!---- <div class="dis">
                                                                   
                         
                         <div class="lol">
 
                             <div class="clone">
-                        <!-- {{items.name}} -->
+                        <!-- {{items.name}} 
                         <br>
                         <div class="sos">
                          <img src="{{Item.pic.url}}" class="im"></div>
@@ -90,7 +89,7 @@
                          </div>
                         </div>
                 </div>
-                </div>
+                </div> -->
 
 
 
@@ -103,20 +102,110 @@
 
 
 
-                </div>
-
-
-
+                <!-- </div>
                 <div class="gallery"> 
-                    <a href="{{Item.pic.url}}" data-lightbox="mygallery"><img src="{{Item.pic1.url}}"> </img></a>
                     <a href="{{Item.pic1.url}}" data-lightbox="mygallery"><img src="{{Item.pic1.url}}"> </img></a>
                     <a href="{{Item.pic2.url}}"data-lightbox="mygallery"><img src="{{Item.pic2.url}}"> </img></a>
+                    <a href="{{Item.pic.url}}" data-lightbox="mygallery"><img src="{{Item.pic1.url}}"> </img></a>
                     <a href="{{Item.pic3.url}}"data-lightbox="mygallery"><img src="{{Item.pic3.url}}"> </img></a>
                     <a href="{{Item.pic4.url}}"data-lightbox="mygallery"><img src="{{Item.pic4.url}}"> </img></a>
-                </div>
+                </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="dis">
+
+
+    <div class="det" >
+     <div class=" gallery imm">
+         <br>
+         <a href="{{Item.pic.url}}" data-lightbox="mygallery"><img src="{{Item.pic.url}}" > </img></a>
+     </div>
+
+    </div>
+    <div class="det"></div>
+    <div class="det idd">
+        <div class="gallery image"> <a href="{{Item.pic1.url}}" data-lightbox="mygallery"><img src="{{Item.pic1.url}}" class="con"> </img></a> </div>
+        <div class="gallery image"><a href="{{Item.pic2.url}}" data-lightbox="mygallery"><img src="{{Item.pic2.url}}" class="con"> </img></a></div>
+        <div class="gallery image"><a href="{{Item.pic3.url}}" data-lightbox="mygallery"><img src="{{Item.pic3.url}}" class="con"> </img></a></div>
+        <div class="gallery image"><a href="{{Item.pic4.url}}" data-lightbox="mygallery"><img src="{{Item.pic4.url}}" class="con"> </img></a></div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
 
 <style>
+    .con{
+        max-width: 100%;
+        height:100% ;
+        max-height: 100%;
+        /* position: fixed; */
+    }
+    .image{
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-left: auto;
+        margin-right: auto;
+        width: 90%;
+        height: 90%;
+        border-style: solid;
+        border-width: 1px 1px 1px 1px;
+        /* overflow: hidden; */
+    }
+    .imm{
+        margin-left: auto;
+        margin-right: auto;
+        width: 90%;
+        height: 80%;
+    }
+    .imm img{
+        max-width: 100%;
+        height: 90%;
+    }
+    .idd{
+        margin-left: auto;
+        margin-right: auto;
+       display: grid;
+       grid-template-columns: auto auto auto auto;
+       grid-gap: 5px;
+       /* padding: 5px; */
+    }
+.det{
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    /* background-color: aqua; */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+   
+.dis{
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    display: grid;
+    grid-template-columns:30% 70%;
+    grid-gap: 10px;
+    grid-template-rows: 100% 20%;
+    /* background-color: red; */
+    height: 70%;
 
+}
     .sos{
         width: 100%;
         height: 100%;
@@ -161,8 +250,10 @@
 .im{
     margin-left: auto;
     margin-right: auto;
-    width: 250px;
-    height: 300px;
+    /* max-width: 100%;
+    max-height: 100%; */
+    width: 200px;
+    height: 250px;
 }
 
 .lol{
@@ -178,11 +269,7 @@
     justify-content: space-between; */
 }
 
-    
-.dis{
-    /* display: grid;
-    grid-column: auto auto auto; */
-}
+ 
 
 .sun{
     width: 20%; 
