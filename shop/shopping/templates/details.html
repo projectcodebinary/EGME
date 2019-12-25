@@ -1,0 +1,452 @@
+
+{% load static %}
+<html>
+
+
+<head>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'magicslideshow/magicslideshow.css' %}"/>
+        <script src="{% static 'magicslideshow/magicslideshow.js' %}" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'lightbox.min.css' %}"/>
+        <script src="{% static 'lightbox-plus-jquery.min.js' %}" type="text/javascript"></script>
+    </head>
+
+
+<body>
+
+
+    <div class="nav">
+      <div class="nav1">
+               <div class="left">
+                  <div class="logo"><img src=""></div>
+               </div>
+               <div class="right">
+                 <div class="navigation">
+                     <a href="#" class="aa"><div class="one"><br>Contact Us</div></a>
+                     <a href="#" class="aa"><div class="one"><br>About Us</div></a>
+                     <a href="#" class="aa"><div class="one"><br>Services</div></a>
+                     <a href="#" class="aa"><div class="one"><br>Archives</div></a>
+                     <a href="https://www.facebook.com/" class="aa"><div class="one"><br>T-shirts</div></a>
+                     {% if user.is_authenticated %}
+                     <div><form action="../Logout/" method = "POST">{% csrf_token %} <button class="btn" type="submit" value="Logout">Logout</button></form></div>
+                     {%endif%}
+                     {% if not user.is_authenticated %}
+                     <a href="{% url 'login' %}" class="aa"><div class="one"><br>LogIn</div></a>
+                     {%endif%}
+                     {% if user.is_authenticated %}
+                     <a href="#" class="aa"><div class="one"><br>Welcome!!  {{user.first_name}} </div></a>
+                     {%endif%}
+                     {% if not user.is_authenticated %}
+                     <a href="#" class="aa"><div class="one"><br>Please Login</div></a>
+                     {%endif%}
+                 </div>
+                 <!-- <div class="log">jwe</div> -->
+               </div>
+
+          </div>
+
+          <!-- <div id="slideshow">
+                <div>
+                  <img src="{% static '1.jpg' %}">
+                </div>
+                <div>
+                  <img src="{% static '2.jpg' %}">
+                </div>
+                <div>
+                        <img src="{% static '3.jpg' %}">
+                </div>
+             </div> -->
+<br>
+<br>
+             <!-- <hr>
+             <br> -->
+            <!-- <div class="cat">
+                    <u>T-shirts for sale</u>
+                    <br><br>    
+            </div> -->
+            <!-- <div class="dis"></div> -->
+
+
+               <!---- <div class="dis">
+                                                                  
+                        
+                        <div class="lol">
+
+                            <div class="clone">
+                        <!-- {{items.name}} 
+                        <br>
+                        <div class="sos">
+                         <img src="{{Item.pic.url}}" class="im"></div>
+                         <br><br>
+
+                        <div class="cl">
+                               {{Item.name}}
+                        </div>
+                        <br>
+                        <div class="clo">
+                                {{Item.price}}
+                         </div>
+                        </div>
+                </div>
+                </div> -->
+
+
+
+
+                <!-- {% for items in Item.all %}
+                <div class="sun"><img src="{{items.pic.url}}"></div>
+
+               {% endfor %} -->
+
+
+
+
+                <!-- </div>
+                <div class="gallery"> 
+                    <a href="{{Item.pic1.url}}" data-lightbox="mygallery"><img src="{{Item.pic1.url}}"> </img></a>
+                    <a href="{{Item.pic2.url}}"data-lightbox="mygallery"><img src="{{Item.pic2.url}}"> </img></a>
+                    <a href="{{Item.pic.url}}" data-lightbox="mygallery"><img src="{{Item.pic1.url}}"> </img></a>
+                    <a href="{{Item.pic3.url}}"data-lightbox="mygallery"><img src="{{Item.pic3.url}}"> </img></a>
+                    <a href="{{Item.pic4.url}}"data-lightbox="mygallery"><img src="{{Item.pic4.url}}"> </img></a>
+                </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="dis">
+
+
+    <div class="det" >
+     <div class=" gallery imm">
+         <br>
+         <a href="{% url 'order_summary' %}" class="btn btn-warning">Go to Cart</a>
+         <a href="{{Item.pic.url}}" data-lightbox="mygallery"><img src="{{Item.pic.url}}" > </img></a>
+     </div>
+     <a href="{% url 'add_to_cart' Item.id %}" class="btn btn-warning">Add to Cart</a>
+    </div>
+    <div class="det"></div>
+    <div class="det idd">
+        <div class="gallery image"> <a href="{{Item.pic1.url}}" data-lightbox="mygallery"><img src="{{Item.pic1.url}}" class="con"> </img></a> </div>
+        <div class="gallery image"><a href="{{Item.pic2.url}}" data-lightbox="mygallery"><img src="{{Item.pic2.url}}" class="con"> </img></a></div>
+        <div class="gallery image"><a href="{{Item.pic3.url}}" data-lightbox="mygallery"><img src="{{Item.pic3.url}}" class="con"> </img></a></div>
+        <div class="gallery image"><a href="{{Item.pic4.url}}" data-lightbox="mygallery"><img src="{{Item.pic4.url}}" class="con"> </img></a></div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<style>
+    .con{
+        max-width: 100%;
+        height:100% ;
+        max-height: 100%;
+        /* position: fixed; */
+    }
+    .image{
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-left: auto;
+        margin-right: auto;
+        width: 90%;
+        height: 90%;
+        border-style: solid;
+        border-width: 1px 1px 1px 1px;
+        /* overflow: hidden; */
+    }
+    .imm{
+        margin-left: auto;
+        margin-right: auto;
+        width: 90%;
+        height: 80%;
+    }
+    .imm img{
+        max-width: 100%;
+        height: 90%;
+    }
+    .idd{
+        margin-left: auto;
+        margin-right: auto;
+       display: grid;
+       grid-template-columns: auto auto auto auto;
+       grid-gap: 5px;
+       /* padding: 5px; */
+    }
+.det{
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    /* background-color: aqua; */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+   
+.dis{
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    display: grid;
+    grid-template-columns:30% 70%;
+    grid-gap: 10px;
+    grid-template-rows: 100% 20%;
+    /* background-color: red; */
+    height: 70%;
+
+}
+    .sos{
+        width: 100%;
+        height: 100%;
+    }
+
+.clo{
+    
+    font-weight: bolder;
+    
+    color: #565656;
+    width: 100%;
+    height: 20%;
+}
+.cl{
+    font-weight: bolder;
+    font-size: 20px;
+    width: 100%;
+    height: 20%;
+}
+
+.clone{
+    margin-left: auto;
+    margin-right: auto;
+    /* background-color: blueviolet; */
+    width: 90%;
+    
+    text-align: center; 
+}
+.clone:hover{
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+/* .clone:hover .im{
+    width: 260px;
+    height:310px ;
+} */
+/* .clone >div >img{
+    max-width: 100px;
+    max-height: 100px;
+} */
+
+.im{
+    margin-left: auto;
+    margin-right: auto;
+    /* max-width: 100%;
+    max-height: 100%; */
+    width: 200px;
+    height: 250px;
+}
+
+.lol{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); */
+    /* background-color: #565656; */
+    display: grid;
+    grid-template-columns: auto  auto  auto ;
+    grid-gap: 50px;
+    /* align-content: space-around;
+    justify-content: space-between; */
+}
+
+ 
+
+.sun{
+    width: 20%; 
+    padding: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    display: grid;
+    grid-column: auto auto auto;
+}
+    .cat{
+        width: 100%;
+        /* height: 100%; */
+        text-align: center;
+        margin-top: 60px;
+        font-weight: bold;
+        color: #565656;
+        font-size: 50px;
+        text-underline-position: below;
+    }
+
+
+#slideshow {
+  margin-top:20px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  height: 500px;
+  padding: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  /* background-color: #565656; */
+}
+
+#slideshow > div {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+#slideshow >div >img {
+        width: 100%;
+        height: 100%;
+        /* display: block; remove extra space below image */
+    }
+
+    /* .lol > img{
+        width: 100%;
+        height: 100%;
+        /* display: block; */
+    /* } */
+
+    .btn{
+        margin-left: 20px;
+        /* margin-right: auto; */
+        /* margin-top: 15px; */
+        border: none;
+        color: orange;
+        font-weight: bold;
+        height: 100%;
+        width: 100;
+        background-color: beige;
+    }
+    .btn:hover{
+        cursor: pointer;
+    }
+  .log{
+      width: 10%;
+    height: 100%;
+    float: right;
+  }
+    .aa{
+        text-decoration: none;;
+    }
+.col{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    height: 30%;
+    text-decoration: none;
+    background-color: white;
+}
+    .sp{
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .one:hover{
+        /* background-color: brown; */
+        border-bottom: 5px solid red;
+    }
+    .one{
+        /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+        color:#565656;
+        font-weight: bold;
+        font-size: 16px;
+        text-decoration: none;
+        margin-left: auto;
+        margin-right: auto;
+        /* background-color: blueviolet; */
+        width: 70%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: auto;
+        text-align: center;
+    }
+.navigation{
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            height: 100%;
+            background-color: aliceblue;
+            display: grid;
+            grid-template-columns: auto  auto  auto  auto  auto  auto  auto  ;
+}
+
+
+.logo{
+            margin-left: auto;
+            margin-right: auto;
+            width: 40%;
+            height: 100%;
+            background-color: aliceblue;
+}
+body{
+     margin:auto;
+}
+.left{
+    float: left;
+    background-color: aqua;
+    width: 30%;
+    height: 100%;
+}
+.right{
+    background-color: black;
+    float: right;
+    width: 70%;
+    height: 100%;
+}
+.nav1{
+    position: relative;
+    top: 0;
+    height: 60px;
+    width: 100%;
+    background-color: yellow;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+.nav2{
+    height: 100%;
+
+    margin-left: 50px;
+    background-color: red;
+}
+.nav{
+    width: 100%;
+    height: 100%;
+}
+
+
+
+    </style>   
+    
+    <script>
+            $("#slideshow > div:gt(0)").hide();
+        
+        setInterval(function() {
+          $('#slideshow > div:first')
+            .fadeOut(1000)
+            .next()
+            .fadeIn(1000)
+            .end()
+            .appendTo('#slideshow');
+        }, 6000);
+        </script>
+        
+
+</body>
+</html>
