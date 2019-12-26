@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import additem
+from .models import additem,sizes
 from django.contrib.auth.forms import UserCreationForm
 from verified_email_field.forms import VerifiedEmailField
 from django.forms import ModelForm
@@ -13,6 +13,12 @@ class Additem(forms.ModelForm):
         fields = '__all__'
      
         
+class changesize(forms.ModelForm):
+    class Meta:
+        model= sizes
+        fields='__all__'
+        
+
 
 class AuthenticationForm(forms.Form):
       username= forms.CharField(widget=forms.TextInput(

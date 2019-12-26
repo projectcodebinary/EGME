@@ -12,6 +12,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
+    # url(r'^paytm/', include('paytm.urls')),
+    # url(r'^changesizes/$',views.changesizes, name='changesizes'),
     url(r'^additem/$',views.addditem, name='addditem'),
     url(r'^$',views.Home, name='home'),
     url(r'^SignUp/$', views.SignUp, name = 'signup'),

@@ -14,13 +14,13 @@ from django.contrib import messages
 from django.core.mail import send_mail 
 from django.template.loader import get_template 
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import Additem
-from .models import additem
+from .forms import Additem,changesize
+from .models import additem,sizes
 from django.shortcuts import render,get_object_or_404
 from .models import Order
 from .models import Profile
 from django.urls import reverse
-from .models import OrderItem, Order
+from .models import OrderItem, Order,sizes
 
 def index(request):
 	return render(request, 'index.html')
@@ -40,9 +40,9 @@ def Home(request):
 	return render(request, 'home.html',context )
 
 
-def nav(request):
-	Item=additem.objects.all()
-	return render(request, 'nav.html', {'Item':Item})
+# def nav(request):
+# 	Item=additem.objects.all()
+# 	return render(request, 'nav.html', {'Item':Item})
 
 
 def SignUp(request):
@@ -65,11 +65,11 @@ def SignUp(request):
 			msg.attach_alternative(html_content, "text / html")
 			msg.send()
 			messages.success(request, f'Your account has been created ! You are now able to log in') 
-
 			return render(request, 'home.html')
 	else:
 		form = RegisterForm()
 	return render(request, 'signup.html', {'form': form})
+
 
 def Login(request):
 	if request.method == 'POST':
@@ -85,9 +85,10 @@ def Login(request):
 
 def Logout(request):
 	if request.method == 'POST':
-		logout(request)
+		logout(request)	
 		return render(request, 'home.html') 
 	return render(request, 'home.html')
+
 
 @login_required(login_url="../Login/")
 def ChangePassword(request):
@@ -99,13 +100,26 @@ def ChangePassword(request):
 			return redirect('../home')
 	else:
 		form = PasswordChangeForm(request.user)
-	return render(request,'password.html', {'form':form})
+	return render(request,'changepassword.html', {'form':form})
 
 # Create your views here.
 
 def nav(request):
-	Item=additem.objects.all()
-	return render(request, 'nav.html', {'Item':Item})
+	# users=Profile.objects.filter(user=request.user).first()
+	# size= sizes.objects.all()
+	form=changesize(request.POST)
+	size='M'
+	if form.is_valid():
+		size=form.cleaned_data['size']
+		form.save()
+	Item=additem.objects.filter(size=size)
+	
+	context={
+		'Item':Item,
+		'form':form,
+	}
+	return render(request, 'nav.html', context)
+
 
 @staff_member_required
 def addditem(request):
@@ -120,6 +134,7 @@ def addditem(request):
 # @login_required(login_url="../Login/")
 def details(request,items):
 	Item=get_object_or_404(additem,pk=items)
+	
 	return render(request, 'details.html', {'Item':Item})
 
 
@@ -152,32 +167,28 @@ def product_list(request):
 
 	return render(request, "product_list.html", context)
 
+
+
+
+
+
 @login_required(login_url="../Login/")
 def add_to_cart(request, **kwargs):
-
-	# get the user profile
 	user_profile = get_object_or_404(Profile, user=request.user)
-	# filter products by id
-	# print(12312)
 	product = additem.objects.filter(id=kwargs.get('item_id', "")).first()
-	# check if the user already owns this product
-	
 	if product in request.user.profile.items.all():
 		messages.info(request, 'You already own this ebook')
-		return redirect(reverse('product-list')) 
-	# create orderItem of the selected product
+		return redirect(reverse('product-list'))
 	order_item, status = OrderItem.objects.get_or_create(product=product)
-	# create order associated with the user
 	user_order, status = Order.objects.get_or_create(owner=user_profile, is_ordered=False)
 	user_order.items.add(order_item)
 	if status:
-		# generate a reference code
-		# user_order.ref_code = generate_order_id()
 		user_order.save()
-
-	# show confirmation message and redirect back to the same page
 	messages.info(request, "item added to cart")
 	return redirect(reverse('nav'))
+
+
+
 
 @login_required(login_url="../Login/")
 def delete_from_cart(request, item_id):
@@ -200,18 +211,29 @@ def get_user_pending_order(request):
 
 @login_required(login_url="../Login/")
 def order_details(request, **kwargs):
+	user_profile = get_object_or_404(Profile, user=request.user)
 	existing_order = get_user_pending_order(request)
+	things= Order.objects.filter(owner=user_profile, is_ordered=False)
 	context = {
-		'order': existing_order
+		'order': existing_order,
+		'things':things
 	}
 	return render(request, 'order_summary.html', context)
 
 
 
-@login_required(login_url="../Login/")
-def order_details(request, **kwargs):
-	existing_order = get_user_pending_order(request)
-	context = {
-		'order': existing_order
-	}
-	return render(request, 'order_summary.html', context)
+# def changesizes(request):
+# 	if request.method == 'POST':
+# 		form = changesize(request.POST)
+# 		t=sizes.objects.get(pk=1)
+# 		if form.is_valid():
+# 			same=form.cleaned_data['size']
+# 			t.size=same
+# 			t.save()
+# 			return redirect('../nav')
+# 	else:
+# 		form = changesize()
+# 	return render(request,'nav.html', {'form':form})
+
+
+
