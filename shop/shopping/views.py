@@ -21,6 +21,7 @@ from .models import Order
 from .models import Profile
 from django.urls import reverse
 from .models import OrderItem, Order,sizes
+from .models import delivery
 
 def index(request):
 	return render(request, 'index.html')
@@ -139,9 +140,6 @@ def details(request,items):
 
 
 
-
-
-
 def my_profile(request):
 	my_user_profile = Profile.objects.filter(user=request.user).first()
 	my_orders = Order.objects.filter(is_ordered=True, owner = my_user_profile)
@@ -214,9 +212,11 @@ def order_details(request, **kwargs):
 	user_profile = get_object_or_404(Profile, user=request.user)
 	existing_order = get_user_pending_order(request)
 	things= Order.objects.filter(owner=user_profile, is_ordered=False)
+	ping=get_object_or_404(delivery)
 	context = {
 		'order': existing_order,
-		'things':things
+		'things':things,
+		'ping':ping,
 	}
 	return render(request, 'order_summary.html', context)
 

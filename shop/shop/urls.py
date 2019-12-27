@@ -29,6 +29,6 @@ urlpatterns = [
     url(r'^add-to-cart/(?P<item_id>[-\w]+)/$', views.add_to_cart, name="add_to_cart"),
     url(r'^item/delete/(?P<item_id>[-\w]+)/$', views.delete_from_cart, name='delete_item'),
     url(r'^order-summary/$', views.order_details, name="order_summary"),
-    url(r'^details/(?P<items>[0-9]+)/$', views.details,name='details'),
+    url(r'^details/(?P<items>[-\w]+)/$', views.details,name='details'),
   ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += staticfiles_urlpatterns()

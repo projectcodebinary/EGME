@@ -62,6 +62,13 @@ class sizes(models.Model):
     def __str__(self):
         return self.size
 
+class delivery(models.Model):
+    charge=models.IntegerField(default=0)
+    # tot = models.ManyToManyField(OrderItem)
+    
+    def get_total(self):
+        return delivery.charge
+
 
 class Order(models.Model):
     ref_code = models.CharField(max_length=15)
@@ -76,6 +83,10 @@ class Order(models.Model):
 
     def get_cart_total(self):
         return sum([item.product.price for item in self.items.all()])
+
+    def get_cart_totall(self):
+        return sum([item.product.discount for item in self.items.all()])
+
 
     def __str__(self):
         return '{0} - {1}'.format(self.owner, self.ref_code)
