@@ -61,8 +61,38 @@
              </div>
 <br>
 <br>
+
+
+{% if addon|length == 0 %}
+<form method="POST">
+        {% csrf_token %}
+    <hr>
+    <h3 class="l"> ADD your <u>ADDRESS</u> to continue </h3>
+        <div class="bb">
+            <div class="vv">
+
+        <div class="addin"> {{win.add}}</div>
+       <div class="addin">{{win.name}}</div>
+       <div class="addin">{{win.street}}</div>
+       <div class="addin">{{win.locality}}</div>
+       <div class="addin">{{win.landmark}}</div>
+       <div class="addin">{{win.pincode}}</div>
+       <div class="addin">{{win.city}}</div> 
+       <div class="addin">{{win.state}}</div>   
+        </div>
+        </div>
+    <button value="submit" type="submit">submit</button>
+</form>
+{% endif %}
+
+
+
+
              <hr>
              <br>
+
+
+             {% if addon|length > 0  %}
 
             <div class="cat">
                     <u>T-shirts for sale</u>
@@ -70,7 +100,7 @@
             </div>
 
 
-
+            
                 <div class="dis">
                             <h3 class="ee"><u>Select size to view T-shirts</u></h3>
                            <br>
@@ -82,16 +112,12 @@
                                     <input type="submit">
                                     
                                 </form>
+                                
                                 {% if Item|length < 1  %}
                                         <h1 class="tr">Sorry , we dont have any T-shirts of this size </h1>                    
                                  {%endif%}
 
                                 </div>
-
-
-                                
-                          
-
                         
                         <div class="lol">
                                 {% for items in Item.all %}
@@ -116,7 +142,7 @@
 
 
 
-
+                {% endif %}
                 <!-- {% for items in Item.all %}
                 <div class="sun"><img src="{{items.pic.url}}"></div>
 
@@ -129,6 +155,58 @@
 
 
 <style>
+    .bb{ 
+        background-color: aquamarine;
+   
+    margin-left: auto;
+    margin-right: auto;
+    height: 50%;
+    width: 100%;
+    }
+
+    .addin{
+        overflow: hidden;
+        height: 70%;
+        max-width: 100%;
+        /* background-color: #565656; */
+        
+    }
+    .addin input{
+        width: 60%;
+        height: 60%;
+    }
+    .vv{
+        text-align: center;
+        /* justify-items: center; */
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-column-gap: 5%;
+        grid-row-gap: 5%;
+        width: 70%;
+        height: 100%;
+        background-color: beige;
+        margin-left: auto;
+        margin-right: auto;
+    }
+.l{
+    text-align: center;
+    color: #565656;
+
+}
+
+
+
+.col{
+    background-color: aquamarine;
+    display: grid;
+    grid-template-columns: 30% 30%;
+    grid-column-gap: 5%;
+    grid-row-gap: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+    width: 100%;
+}
     .tr{
         margin-left: auto;
     margin-right: auto;

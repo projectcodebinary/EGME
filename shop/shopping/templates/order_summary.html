@@ -59,18 +59,13 @@
       <div class="cart">
 
         <div class="lt"><p class="min"><strong>My Cart({{order.total}})</strong></p></div>
-        <div class="rt"><p class="min1"><strong>Shipping Adress</strong></p></div>
-      </div>
-
+        <div class="rt"><p class="min1"><strong>Shipping Adress <br> {{addon.addr}} </strong></p></div>
+        </div>
       <div class="itm">
-
-         
-
           {% for item in order.get_cart_items %}
           <div class="in">
           <br>
           <div class="nic">
-            
             <div class="yu"><div class="cen">
               <img src={{item.product.pic.url}} class="ii">
             </div>  </div>
@@ -95,7 +90,7 @@
           {% endfor %}
         
       </div>
-
+      
    </div>
    <div class="rgt">
          <h2 class="hin">PRICE DETAILS :</h2>
@@ -112,14 +107,10 @@
 </div>
 
 
-
-
-
 <style>
 .fr{
   float: left;
 }
-.
 .yt{
   float: right;
   height: 5%;
@@ -129,7 +120,7 @@
 .in{
     width: 80%;
     background-color: aliceblue;
-    height: 50%;
+    height: 40%;
     margin-left: auto;
     margin-right: auto;
     margin-top: 5%;
@@ -206,7 +197,7 @@
   }
   .ii{
     width: 100%;
-    height: 130%;
+    max-height: 130%;
   }
 .cen{
   /* vertical-align: middle; */

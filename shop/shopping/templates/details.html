@@ -129,10 +129,12 @@
     <div class="det" >
      <div class=" gallery imm">
          <br>
-         <a href="{% url 'order_summary' %}" class="btn btn-warning">Go to Cart</a>
+        
          <a href="{{Item.pic.url}}" data-lightbox="mygallery"><img src="{{Item.pic.url}}" > </img></a>
      </div>
-     <a href="{% url 'add_to_cart' Item.id %}" class="btn btn-warning">Add to Cart</a>
+     
+     <a href="{% url 'order_summary' %}" class="btn btn-warning"><button class="von">GO TO CART</button></a>
+     <a href="{% url 'add_to_cart' Item.id %}" class="btn btn-warning"><button class="vonn"> ADD TO CART     </button></a>
     </div>
     <div class="det"></div>
     <div class="det idd">
@@ -152,6 +154,27 @@
 
 
 <style>
+    .von{
+        color: red;
+        height: 10%;
+        width: 42%;
+        cursor: pointer;
+        background-color: beige;
+        font-weight: bold;
+        border: solid 5px #FC5185;
+        border-radius: 10px;
+    }
+    .vonn{
+        border-radius: 10px;
+        font-weight: bold;
+        background-color: bisque;
+        border: solid 5px #FC5185;
+        border-color:orange;
+        color: red;
+        height: 10%;
+        width: 42%;
+        cursor: pointer;
+    }
     .con{
         max-width: 100%;
         height:100% ;

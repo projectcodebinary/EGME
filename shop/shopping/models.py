@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db.models.signals import post_save
 
 
+
 choices=(
     ("S", "S"), 
     ("M", "M"), 
@@ -39,6 +40,24 @@ class Profile(models.Model):
         return self.user.username
 
 
+
+
+
+class adress(models.Model):
+    own=models.ForeignKey(Profile,on_delete=models.CASCADE)
+    add=models.TextField(max_length=50)
+    name=models.TextField()
+    pincode=models.IntegerField()
+    locality=models.TextField()
+    street =models.TextField()
+    landmark = models.TextField()
+    city=models.TextField()
+    state=models.TextField()
+
+
+    def addr(self):
+        return self.own
+
 def post_save_profile_create(sender,instance,created,*args,**kwargs):
     user_profile,created=Profile.objects.get_or_create(user=instance)
 
@@ -70,6 +89,7 @@ class delivery(models.Model):
         return delivery.charge
 
 
+
 class Order(models.Model):
     ref_code = models.CharField(max_length=15)
     owner = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
@@ -80,6 +100,9 @@ class Order(models.Model):
 
     def get_cart_items(self):
         return self.items.all()
+
+    def own(self):
+        return self.owner 
 
     def get_cart_total(self):
         return sum([item.product.price for item in self.items.all()])

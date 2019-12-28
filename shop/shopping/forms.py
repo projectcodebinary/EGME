@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import additem,sizes
+from .models import additem,sizes,adress
 from django.contrib.auth.forms import UserCreationForm
 from verified_email_field.forms import VerifiedEmailField
 from django.forms import ModelForm
@@ -18,6 +18,11 @@ class changesize(forms.ModelForm):
         model= sizes
         fields='__all__'
         
+
+class address(forms.ModelForm):
+    class Meta:
+        model=adress
+        fields=['add','name','pincode','locality','street','landmark','city','state']
 
 
 class AuthenticationForm(forms.Form):
@@ -60,7 +65,7 @@ class RegisterForm(UserCreationForm):
             'class':'form-control',
             'placeholder': 'Your Second name',
     }
-))
+))  
 
       password1= forms.CharField(widget=forms.TextInput(
           attrs={

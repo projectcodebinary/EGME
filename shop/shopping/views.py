@@ -14,14 +14,15 @@ from django.contrib import messages
 from django.core.mail import send_mail 
 from django.template.loader import get_template 
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import Additem,changesize
+from .forms import Additem,changesize,address
 from .models import additem,sizes
 from django.shortcuts import render,get_object_or_404
 from .models import Order
 from .models import Profile
 from django.urls import reverse
 from .models import OrderItem, Order,sizes
-from .models import delivery
+from .models import delivery,adress
+
 
 def index(request):
 	return render(request, 'index.html')
@@ -47,9 +48,11 @@ def Home(request):
 
 
 def SignUp(request):
+	
 	if request.method == "POST":
 		form = RegisterForm(request.POST)
-		if form.is_valid():
+
+		if form.is_valid() and lol.is_valid():
 			message=('account created')
 			emailvalue= form.cleaned_data.get("email")
 			username = form.cleaned_data['username']
@@ -57,6 +60,7 @@ def SignUp(request):
 			# send_mail('Hello','Hello there, today i tried to add a email verification code','coolbinary69@gmail.com',
 			# [emailvalue],
 			# fail_silently=False)
+			
 			form.save()
 			htmly = get_template('index.html')
 			d = { 'username': username } 
@@ -69,7 +73,11 @@ def SignUp(request):
 			return render(request, 'home.html')
 	else:
 		form = RegisterForm()
-	return render(request, 'signup.html', {'form': form})
+		
+	context={
+		'form':form,
+	}
+	return render(request, 'signup.html',context)
 
 
 def Login(request):
@@ -108,6 +116,7 @@ def ChangePassword(request):
 def nav(request):
 	# users=Profile.objects.filter(user=request.user).first()
 	# size= sizes.objects.all()
+	win=address(request.POST)
 	form=changesize(request.POST)
 	size='M'
 	if form.is_valid():
@@ -115,9 +124,22 @@ def nav(request):
 		form.save()
 	Item=additem.objects.filter(size=size)
 	
+
+	if win.is_valid():
+
+		windows=win.cleaned_data['add']
+		usr=get_object_or_404(Profile, user=request.user)
+		addd=win.cleaned_data['add']
+		pn=adress.objects.filter(own=usr)
+		pn.add=addd
+		if adress.objects.all().count()==0:
+			adress.objects.get_or_create(own = usr,add=addd)
+		pn.all().update(add=addd)
+
 	context={
 		'Item':Item,
 		'form':form,
+		'win':win
 	}
 	return render(request, 'nav.html', context)
 
@@ -175,7 +197,7 @@ def add_to_cart(request, **kwargs):
 	user_profile = get_object_or_404(Profile, user=request.user)
 	product = additem.objects.filter(id=kwargs.get('item_id', "")).first()
 	if product in request.user.profile.items.all():
-		messages.info(request, 'You already own this ebook')
+		messages.info(request, 'You already own this product')
 		return redirect(reverse('product-list'))
 	order_item, status = OrderItem.objects.get_or_create(product=product)
 	user_order, status = Order.objects.get_or_create(owner=user_profile, is_ordered=False)
@@ -207,20 +229,23 @@ def get_user_pending_order(request):
 		return order[0]
 	return 0
 
+
 @login_required(login_url="../Login/")
 def order_details(request, **kwargs):
+	
 	user_profile = get_object_or_404(Profile, user=request.user)
 	existing_order = get_user_pending_order(request)
 	things= Order.objects.filter(owner=user_profile, is_ordered=False)
 	ping=get_object_or_404(delivery)
+	addon=adress.objects.filter(own=user_profile)
 	context = {
 		'order': existing_order,
 		'things':things,
 		'ping':ping,
+		'local':user_profile,
+		'addon':addon,
 	}
 	return render(request, 'order_summary.html', context)
-
-
 
 # def changesizes(request):
 # 	if request.method == 'POST':
