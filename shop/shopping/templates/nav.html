@@ -64,6 +64,7 @@
 
 
 {% if addon|length == 0 %}
+{{ addon|length }}
 <form method="POST">
         {% csrf_token %}
     <hr>
@@ -171,9 +172,13 @@
         /* background-color: #565656; */
         
     }
+    .addin textarea{
+        width: 60%;
+        height: 70%;
+    }
     .addin input{
         width: 60%;
-        height: 60%;
+        height: 70%;
     }
     .vv{
         text-align: center;

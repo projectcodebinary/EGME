@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^Logout/$', views.Logout, name = 'logout'),
     url(r'^ChangePassword/$', views.ChangePassword, name = 'changepassword'),
     url(r'^home/$', views.Home, name = 'Home'),
+    url(r'^char/$', views.changeaddr, name = 'changeaddr'),
     url(r'^Logout/home/$', views.Home, name = 'Home'),
     path('admin/', admin.site.urls),
     url(r'^nav/$', views.nav , name = 'nav'),

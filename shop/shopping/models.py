@@ -47,7 +47,7 @@ class adress(models.Model):
     own=models.ForeignKey(Profile,on_delete=models.CASCADE)
     add=models.TextField(max_length=50)
     name=models.TextField()
-    pincode=models.IntegerField()
+    pincode=models.IntegerField(default=800020)
     locality=models.TextField()
     street =models.TextField()
     landmark = models.TextField()
@@ -56,7 +56,7 @@ class adress(models.Model):
 
 
     def addr(self):
-        return self.own
+        return self.add
 
 def post_save_profile_create(sender,instance,created,*args,**kwargs):
     user_profile,created=Profile.objects.get_or_create(user=instance)

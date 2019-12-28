@@ -113,6 +113,38 @@ def ChangePassword(request):
 
 # Create your views here.
 
+def changeaddr(request):
+	usr=get_object_or_404(Profile, user=request.user)
+	forms=address(request.POST)
+	if request.method == 'POST':
+		if forms.is_valid():
+			windows=forms.cleaned_data['add']
+			addd=forms.cleaned_data['add']
+			pin=forms.cleaned_data['pincode']
+			name=forms.cleaned_data['name']
+			locality=forms.cleaned_data['locality']
+			street=forms.cleaned_data['street']
+			city=forms.cleaned_data['city']
+			state=forms.cleaned_data['state']
+			landmark=forms.cleaned_data['landmark']
+			pn=adress.objects.filter(own=usr)
+			pn.add=addd
+			pn.pincode=pin
+			pn.name=name
+			pn.locality=locality
+			pn.city=city
+			pn.state=state
+			pn.landmark=landmark
+			pn.street=street
+				
+			if adress.objects.all().count()==0:
+				adress.objects.get_or_create(own = usr,add=addd,pincode=pin,city=city,state=state,street=street,locality=locality,landmark=landmark,name=name)
+			pn.all().update(add=addd,pincode=pin,city=city,state=state,street=street,locality=locality,landmark=landmark,name=name)
+	addon=adress.objects.filter(own=usr)
+	return render(request,'changeaddress.html', {'forms':forms})
+
+
+
 def nav(request):
 	# users=Profile.objects.filter(user=request.user).first()
 	# size= sizes.objects.all()
@@ -123,23 +155,39 @@ def nav(request):
 		size=form.cleaned_data['size']
 		form.save()
 	Item=additem.objects.filter(size=size)
-	
+	usr=get_object_or_404(Profile, user=request.user)
+		
 
 	if win.is_valid():
 
 		windows=win.cleaned_data['add']
-		usr=get_object_or_404(Profile, user=request.user)
 		addd=win.cleaned_data['add']
+		pin=win.cleaned_data['pincode']
+		name=win.cleaned_data['name']
+		locality=win.cleaned_data['locality']
+		street=win.cleaned_data['street']
+		city=win.cleaned_data['city']
+		state=win.cleaned_data['state']
+		landmark=win.cleaned_data['landmark']
 		pn=adress.objects.filter(own=usr)
 		pn.add=addd
+		pn.pincode=pin
+		pn.name=name
+		pn.locality=locality
+		pn.city=city
+		pn.state=state
+		pn.landmark=landmark
+		pn.street=street
+			
 		if adress.objects.all().count()==0:
-			adress.objects.get_or_create(own = usr,add=addd)
-		pn.all().update(add=addd)
-
+			adress.objects.get_or_create(own = usr,add=addd,pincode=pin,city=city,state=state,street=street,locality=locality,landmark=landmark,name=name)
+		pn.all().update(add=addd,pincode=pin,city=city,state=state,street=street,locality=locality,landmark=landmark,name=name)
+	addon=adress.objects.filter(own=usr)
 	context={
 		'Item':Item,
 		'form':form,
-		'win':win
+		'win':win,
+		'addon':addon
 	}
 	return render(request, 'nav.html', context)
 

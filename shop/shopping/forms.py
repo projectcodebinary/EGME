@@ -20,9 +20,14 @@ class changesize(forms.ModelForm):
         
 
 class address(forms.ModelForm):
+    # add=forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter your first name'}))
     class Meta:
         model=adress
         fields=['add','name','pincode','locality','street','landmark','city','state']
+       
+
+
+
 
 
 class AuthenticationForm(forms.Form):
