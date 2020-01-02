@@ -21,7 +21,17 @@ from .models import Order
 from .models import Profile
 from django.urls import reverse
 from .models import OrderItem, Order,sizes
-from .models import delivery,adress
+from .models import delivery,adress,Transaction
+from django.contrib import messages
+from django.http import HttpResponse, HttpResponseRedirect
+
+
+from .extras import generate_order_id, transact, generate_client_token
+
+import datetime
+import stripe
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def index(request):
@@ -52,7 +62,7 @@ def SignUp(request):
 	if request.method == "POST":
 		form = RegisterForm(request.POST)
 
-		if form.is_valid() and lol.is_valid():
+		if form.is_valid():
 			message=('account created')
 			emailvalue= form.cleaned_data.get("email")
 			username = form.cleaned_data['username']
@@ -87,7 +97,7 @@ def Login(request):
 			print("jvg")
 			user = form.get_user()
 			login(request, user)
-			return render(request, 'home.html')
+			return HttpResponseRedirect('../nav')
 	else:
 		form = AuthenticationForm()
 	return render(request, 'login.html', {'form':form})
@@ -137,17 +147,15 @@ def changeaddr(request):
 			pn.landmark=landmark
 			pn.street=street
 				
-			if adress.objects.all().count()==0:
+			if adress.objects.filter(own=usr).all().count()==0:
 				adress.objects.get_or_create(own = usr,add=addd,pincode=pin,city=city,state=state,street=street,locality=locality,landmark=landmark,name=name)
-			pn.all().update(add=addd,pincode=pin,city=city,state=state,street=street,locality=locality,landmark=landmark,name=name)
+			pn.filter(own=usr).all().update(add=addd,pincode=pin,city=city,state=state,street=street,locality=locality,landmark=landmark,name=name)
 	addon=adress.objects.filter(own=usr)
 	return render(request,'changeaddress.html', {'forms':forms})
 
 
-
+@login_required(login_url="../Login/")
 def nav(request):
-	# users=Profile.objects.filter(user=request.user).first()
-	# size= sizes.objects.all()
 	win=address(request.POST)
 	form=changesize(request.POST)
 	size='M'
@@ -178,10 +186,10 @@ def nav(request):
 		pn.state=state
 		pn.landmark=landmark
 		pn.street=street
-			
-		if adress.objects.all().count()==0:
+		
+		if adress.objects.filter(own=usr).all().count()==0:
 			adress.objects.get_or_create(own = usr,add=addd,pincode=pin,city=city,state=state,street=street,locality=locality,landmark=landmark,name=name)
-		pn.all().update(add=addd,pincode=pin,city=city,state=state,street=street,locality=locality,landmark=landmark,name=name)
+		pn.filter(own=usr).all().update(add=addd,pincode=pin,city=city,state=state,street=street,locality=locality,landmark=landmark,name=name)
 	addon=adress.objects.filter(own=usr)
 	context={
 		'Item':Item,
@@ -190,7 +198,6 @@ def nav(request):
 		'addon':addon
 	}
 	return render(request, 'nav.html', context)
-
 
 @staff_member_required
 def addditem(request):
@@ -202,11 +209,16 @@ def addditem(request):
 	form=Additem()
 	return render(request,'additem.html',{'form':form})
 
-# @login_required(login_url="../Login/")
+@login_required(login_url="../Login/")
 def details(request,items):
+	usr=get_object_or_404(Profile, user=request.user)
 	Item=get_object_or_404(additem,pk=items)
-	
-	return render(request, 'details.html', {'Item':Item})
+	adon = get_object_or_404(adress,own=usr)
+	context={
+		'Item':Item,
+		'adon':adon
+	}
+	return render(request, 'details.html', context)
 
 
 
@@ -268,6 +280,7 @@ def delete_from_cart(request, item_id):
 
 
 
+@login_required(login_url="../Login/")
 def get_user_pending_order(request):
 	# get order for the correct user
 	user_profile = get_object_or_404(Profile, user=request.user)
@@ -310,3 +323,102 @@ def order_details(request, **kwargs):
 
 
 
+
+
+
+
+@login_required()
+def checkout(request, **kwargs):
+    client_token = generate_client_token()
+    existing_order = get_user_pending_order(request)
+    publishKey = settings.STRIPE_PUBLISHABLE_KEY
+    if request.method == 'POST':
+        token = request.POST.get('stripeToken', False)
+        if token:
+            try:
+                charge = stripe.Charge.create(
+                    amount=100*existing_order.get_cart_total(),
+                    currency='usd',
+                    description='Example charge',
+                    source=token,
+                )
+
+                return redirect(reverse('update_records',
+                        kwargs={
+                            'token': token
+                        })
+                    )
+            except stripe.CardError as e:
+                messages.info(request, "Your card has been declined.")
+        else:
+            result = transact({
+                'amount': existing_order.get_cart_total(),
+                'payment_method_nonce': request.POST['payment_method_nonce'],
+                'options': {
+                    "submit_for_settlement": True
+                }
+            })
+
+            if result.is_success or result.transaction:
+                return redirect(reverse('update_records',
+                        kwargs={
+                            'token': result.transaction.id
+                        })
+                    )
+            else:
+                for x in result.errors.deep_errors:
+                    messages.info(request, x)
+                return redirect(reverse('checkout'))
+            
+    context = {
+        'order': existing_order,
+        'client_token': client_token,
+        'STRIPE_PUBLISHABLE_KEY': publishKey
+    }
+
+    return render(request, 'checkout.html', context)
+
+
+@login_required()
+def update_transaction_records(request, token):
+    # get the order being processed
+    order_to_purchase = get_user_pending_order(request)
+
+    # update the placed order
+    order_to_purchase.is_ordered=True
+    order_to_purchase.date_ordered=datetime.datetime.now()
+    order_to_purchase.save()
+    
+    # get all items in the order - generates a queryset
+    order_items = order_to_purchase.items.all()
+
+    # update order items
+    order_items.update(is_ordered=True, date_ordered=datetime.datetime.now())
+
+    # Add products to user profile
+    user_profile = get_object_or_404(Profile, user=request.user)
+    # get the products from the items
+    order_products = [item.product for item in order_items]
+    user_profile.ebooks.add(*order_products)
+    user_profile.save()
+
+    
+    # create a transaction
+    transaction = Transaction(profile=request.user.profile,
+                            token=token,
+                            order_id=order_to_purchase.id,
+                            amount=order_to_purchase.get_cart_total(),
+                            success=True)
+    # save the transcation (otherwise doesn't exist)
+    transaction.save()
+
+
+    # send an email to the customer
+    # look at tutorial on how to send emails with sendgrid
+    messages.info(request, "Thank you! Your purchase was successful!")
+    return redirect(reverse('accounts:my_profile'))
+
+
+def success(request, **kwargs):
+    # a view signifying the transcation was successful
+    return render(request, 'purchase_success.html', {})

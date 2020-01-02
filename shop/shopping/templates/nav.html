@@ -21,15 +21,15 @@
     <div class="nav">
       <div class="nav1">
                <div class="left">
-                  <div class="logo"><img src=""></div>
+                  <div class="logo"><img src="{% static '70.png' %}" class="om"></div>
                </div>
                <div class="right">
                  <div class="navigation">
                      <a href="#" class="aa"><div class="one"><br>Contact Us</div></a>
                      <a href="#" class="aa"><div class="one"><br>About Us</div></a>
                      <a href="#" class="aa"><div class="one"><br>Services</div></a>
-                     <a href="#" class="aa"><div class="one"><br>Archives</div></a>
-                     <a href="https://www.facebook.com/" class="aa"><div class="one"><br>T-shirts</div></a>
+                     <a href="{% url 'order_summary' %}" class="aa"><div class="one"><br>Cart</div></a>
+                     <a href="{% url 'nav' %}" class="aa"><div class="one"><br>T-shirts</div></a>
                      {% if user.is_authenticated %}
                      <div><form action="../Logout/" method = "POST">{% csrf_token %} <button class="btn" type="submit" value="Logout">Logout</button></form></div>
                      {%endif%}
@@ -50,29 +50,36 @@
 
           <div id="slideshow">
                 <div>
-                  <img src="{% static '1.jpg' %}">
+                  <img src="{% static 's.jpg' %}">
                 </div>
                 <div>
-                  <img src="{% static '2.jpg' %}">
+                  <img src="{% static 's1.jpg' %}">
                 </div>
                 <div>
-                        <img src="{% static '3.jpg' %}">
-                </div>
+                        <img src="{% static 's3.jpg' %}">
+                </div><div>
+                        <img src="{% static 's2.jpg' %}">
+                      </div>
+                      <div>
+                            <img src="{% static 's4.jpg' %}">
+                          </div>
+                              <div>
+                                    <img src="{% static 's6.jpg' %}">
+                                  </div>
+                                  
              </div>
 <br>
 <br>
 
 
 {% if addon|length == 0 %}
-{{ addon|length }}
 <form method="POST">
         {% csrf_token %}
     <hr>
     <h3 class="l"> ADD your <u>ADDRESS</u> to continue </h3>
         <div class="bb">
             <div class="vv">
-
-        <div class="addin"> {{win.add}}</div>
+       <div class="addin">{{win.add}}</div>
        <div class="addin">{{win.name}}</div>
        <div class="addin">{{win.street}}</div>
        <div class="addin">{{win.locality}}</div>
@@ -80,9 +87,9 @@
        <div class="addin">{{win.pincode}}</div>
        <div class="addin">{{win.city}}</div> 
        <div class="addin">{{win.state}}</div>   
-        </div>
-        </div>
-    <button value="submit" type="submit">submit</button>
+       </div>
+       </div>
+    <button value="submit" type="submit" class="kkk" >ADD</button>
 </form>
 {% endif %}
 
@@ -144,6 +151,10 @@
 
 
                 {% endif %}
+                <br>
+                <br>
+                <hr>
+                <div class="bott">Copyright reserved @ANKURSHR01</div>
                 <!-- {% for items in Item.all %}
                 <div class="sun"><img src="{{items.pic.url}}"></div>
 
@@ -156,8 +167,38 @@
 
 
 <style>
+    .bott{
+        margin-top: 3%;
+        text-align: center;
+        margin-bottom: 3%;
+    }
+    .kkk{
+        margin-left: 45%;
+        margin-right: auto;
+        width: 10%;
+        height: 5%;
+        margin-top: 2%;
+        background-color: blueviolet;
+        font-weight: bold;
+        color: white;
+        border: none;
+        font-size: 15px;
+    }
+    .kkk:hover{
+        cursor: pointer;
+    }
+    .fuk{
+        background-color:papayawhip;
+        margin-top: 3%;
+    }
+
+    .om{
+        width: 100%;
+        height: 100%;
+        
+    }
     .bb{ 
-        background-color: aquamarine;
+        /* background-color: aquamarine; */
    
     margin-left: auto;
     margin-right: auto;
@@ -171,25 +212,36 @@
         max-width: 100%;
         /* background-color: #565656; */
         
+    
+    }
+    .addin textarea::placeholder{
+        padding-top: 1%;
+        font-weight: bold;
     }
     .addin textarea{
+        resize: none;
+        text-align: center; 
         width: 60%;
         height: 70%;
+        border-radius: 0px;
+        text-align: center;
+        color: black;
+        padding-top: 10px;
+        vertical-align: center;
     }
-    .addin input{
-        width: 60%;
-        height: 70%;
+    .addin textarea input{
+        margin-top: 10%;
+        color: aqua;
     }
     .vv{
         text-align: center;
-        /* justify-items: center; */
         display: grid;
         grid-template-columns: auto auto;
         grid-column-gap: 5%;
         grid-row-gap: 5%;
         width: 70%;
         height: 100%;
-        background-color: beige;
+        /* background-color: beige; */
         margin-left: auto;
         margin-right: auto;
     }
@@ -455,7 +507,7 @@
             margin-right: auto;
             width: 40%;
             height: 100%;
-            background-color: aliceblue;
+            /* background-color: aliceblue; */
 }
 body{
     font-family: 'Roboto', sans-serif;
@@ -463,7 +515,7 @@ body{
 }
 .left{
     float: left;
-    background-color: aqua;
+    /* background-color: aqua; */
     width: 30%;
     height: 100%;
 }
@@ -478,7 +530,7 @@ body{
     top: 0;
     height: 60px;
     width: 100%;
-    background-color: yellow;
+    /* background-color: yellow; */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
 .nav2{

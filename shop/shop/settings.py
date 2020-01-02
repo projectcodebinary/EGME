@@ -26,6 +26,7 @@ SECRET_KEY = 'nv$dm6$d@=w_xagdb@20=2!q*qhi+1#e=u4-r0v+qdq*au4$g#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = []
 
 
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'phone_field',
     'crispy_forms',
     # 'simple_email_confirmation',
+    'stripe',
 ]
 
 MIDDLEWARE = [
@@ -128,6 +130,27 @@ STATIC_URL = '/static/'
 # MEDIA_ROOT = BASE_DIR
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+
+if DEBUG:
+    # test keys
+    STRIPE_PUBLISHABLE_KEY = ''
+    STRIPE_SECRET_KEY = ''
+    BT_ENVIRONMENT='sandbox'
+    BT_MERCHANT_ID='YOUR BT_MERCHANT_ID'
+    BT_PUBLIC_KEY='YOUR BT_PUBLIC_KEY'
+    BT_PRIVATE_KEY='YOUR BT_PRIVATE_KEY'
+else:
+    # live keys
+    STRIPE_PUBLISHABLE_KEY = 'YOUR STRIPE LIVE PUB KEY'
+    STRIPE_SECRET_KEY = 'YOUR STRIPE LIVE SECRET KEY'
+
+
+
+
+SITE_ID = 1
+
 
 # from .email_info import EMAIL_PORT,EMAIL_USE_TLS,EMAIL_HOST,EMAIL_PORT,EMAIL_HOST_PASSWORD,EMAIL_HOST_USER,EMAIL_HOST_PASSWORD
 

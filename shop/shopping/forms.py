@@ -20,13 +20,19 @@ class changesize(forms.ModelForm):
         
 
 class address(forms.ModelForm):
-    # add=forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter your first name'}))
     class Meta:
         model=adress
         fields=['add','name','pincode','locality','street','landmark','city','state']
-       
-
-
+        widgets = { 
+            'add': forms.Textarea(attrs={'placeholder': 'ADDRESS','class': "fuk"}),
+            'name': forms.Textarea(attrs={'placeholder': 'YOUR NAME','class': "fuk"}),
+            'pincode': forms.Textarea(attrs={'placeholder': 'PINCODE','class': "fuk"}),
+            'locality': forms.Textarea(attrs={'placeholder': 'LOCALITY','class': "fuk"}),
+            'landmark': forms.Textarea(attrs={'placeholder': 'LANDMARK','class': "fuk"}),
+            'street': forms.Textarea(attrs={'placeholder': 'STREET','class': "fuk"}),
+            'city': forms.Textarea(attrs={'placeholder': 'CITY','class': "fuk"}),
+            'state': forms.Textarea(attrs={'placeholder': 'STATE','class': "fuk"}),
+        } 
 
 
 

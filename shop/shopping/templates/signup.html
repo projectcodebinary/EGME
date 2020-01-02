@@ -5,21 +5,14 @@
 	 
 	 <div class="main">
 		<div class="logon" >
-			<a href="https://arkinginfotech.in/"></a>
+			<a href=""></a>
 		   </div>
 		   <div class="log">
 			<span class="ss">Welcome! Register Here</span>
 		</div>
 		<div class="up">
-
 		<div class="left"></div>
-		
-
-
-
 		<div class="right">
-
-
 			<div class="logo"></div>
 			<div class="shift">
 				<form action="../SignUp/" method = "POST">
@@ -35,8 +28,7 @@
 					<br><br>
 					{{form.password1}}
 					<br><br>
-					{{form.password2}}  
-
+					{{form.password2}}
 					<br><br>
 					{{lol}}
 				</div>
@@ -82,7 +74,7 @@ document.getElementById("form-control").value = "";
 }
 .logon{
 		height: 100px;
-		background-image: url('{% static " /logo.png" %}');
+		background-image: url('{% static "logo.jpg" %}');
 		background-position:0 0;
 	background-size: 15% 100%;
 	background-repeat: no-repeat;
@@ -93,7 +85,7 @@ document.getElementById("form-control").value = "";
 		align-content: center;
 		text-align: center;
 		align-items: center;
-		background-image: url('{% static " /reg.jpg" %}')
+		background-image: url('{% static "reg.jpg" %}')
 	}
 	.log{
 		margin-bottom: none;
@@ -127,7 +119,7 @@ document.getElementById("form-control").value = "";
 	background-size:100% 100%;
 	overflow: hidden;
 	display: inline-block;
-	background-image: url('{% static " /4.jpg" %}');
+	background-image: url('{% static "4.jpg" %}');
 	box-shadow: 5px 10px 20px orange;
 }
     #di input{
@@ -135,18 +127,18 @@ document.getElementById("form-control").value = "";
     }
 	.up{
 	border-radius: 30px;
-	margin-top:50px;
+	margin-top:10px;
 	display: inline-block;
 	width:70%;
-	height: 70%;	
-	overflow: hidden;
+	height: 80%;	
+	/* overflow: hidden; */
 }
 .left{
 	border-radius: 30px;
 	float: left;
-	width: 50%;
+	width: 40%;
 	height: 100%;
-	background-image: url('{% static " /sign.png" %}');
+	background-image: url('{% static "sign.png" %}');
     background-size: contain; 
 	background-repeat: no-repeat;
 	background-position: 70px 20px;
@@ -155,18 +147,13 @@ document.getElementById("form-control").value = "";
 	
 }
 
-.left:hover{
-	width: 50%;
-	height: 100%;
-}
-
 .right{
 	
 	border: 4px solid orange;
 	border-radius: 30px;
-	height: 98.7%;
+	height: 100%;
 	float: right;
-	width: 48%;
+	width: 52%;
 	margin-left: 2px;
 }
 
@@ -188,7 +175,7 @@ input:focus::placeholder{
 	box-shadow: 2px 2px 8px white;
 }
 .shift{
-	margin-top:60px;
+	margin-top:55px;
 
 }
 

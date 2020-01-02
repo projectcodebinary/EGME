@@ -11,14 +11,15 @@ choices=(
     ("L", "L"), 
     ("XL", "XL"), 
     ("XXL", "XXL"), 
-    ("","")
+    ("","Select size")
 )
 
 class additem(models.Model):
-    name = models.CharField(max_length=10,help_text='Enter your name')
-    title=models.CharField(max_length=10)
+    name = models.CharField(max_length=10,help_text='Product name')
+    title=models.CharField(max_length=100)
     pic = models.ImageField()
     price = models.IntegerField()
+    description = models.TextField(default="lol")
     quantity=models.IntegerField()
     discount= models.IntegerField()
     pic1 = models.ImageField()
@@ -53,10 +54,13 @@ class adress(models.Model):
     landmark = models.TextField()
     city=models.TextField()
     state=models.TextField()
-
+    phone=models.IntegerField(max_length=10)
 
     def addr(self):
         return self.add
+
+    def phn(self):
+        return self.phone
 
 def post_save_profile_create(sender,instance,created,*args,**kwargs):
     user_profile,created=Profile.objects.get_or_create(user=instance)
@@ -122,3 +126,22 @@ class Order(models.Model):
 
     def sizes(self):
         return self.item.products.size
+
+
+
+
+
+class Transaction(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    token = models.CharField(max_length=120)
+    order_id = models.CharField(max_length=120)
+    amount = models.DecimalField(max_digits=100, decimal_places=2)
+    success = models.BooleanField(default=True)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+
+    def __str__(self):
+        return self.order_id
+
+    class Meta:
+        ordering = ['-timestamp']
+
