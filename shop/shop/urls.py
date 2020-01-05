@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^checkout/$',views.checkout, name='checkout'),
     url(r'^$',views.nav, name='nav'),
     url(r'^SignUp/$', views.SignUp, name = 'signup'),
+    url(r'^cash/$', views.cash, name = 'cash'),
     url(r'^Login/$', views.Login, name = 'login'),
     url(r'^Logout/$', views.Logout, name = 'logout'),
     url(r'^ChangePassword/$', views.ChangePassword, name = 'changepassword'),

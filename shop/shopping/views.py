@@ -21,11 +21,11 @@ from .models import Order
 from .models import Profile
 from django.urls import reverse
 from .models import OrderItem, Order,sizes
-from .models import delivery,adress,Transaction
+from .models import delivery,adress,Transaction,ordered
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
-
-
+from .number import number
+from django.contrib.auth.models import User
 from .extras import generate_order_id, transact, generate_client_token
 
 import datetime
@@ -247,25 +247,20 @@ def product_list(request):
 
 	return render(request, "product_list.html", context)
 
-
-
-
-
-
 @login_required(login_url="../Login/")
 def add_to_cart(request, **kwargs):
 	user_profile = get_object_or_404(Profile, user=request.user)
 	product = additem.objects.filter(id=kwargs.get('item_id', "")).first()
 	if product in request.user.profile.items.all():
 		messages.info(request, 'You already own this product')
-		return redirect(reverse('product-list'))
+		return redirect(reverse('order_summary'))
 	order_item, status = OrderItem.objects.get_or_create(product=product)
 	user_order, status = Order.objects.get_or_create(owner=user_profile, is_ordered=False)
 	user_order.items.add(order_item)
 	if status:
 		user_order.save()
 	messages.info(request, "item added to cart")
-	return redirect(reverse('nav'))
+	return redirect(reverse('order_summary'))
 
 
 
@@ -298,13 +293,13 @@ def order_details(request, **kwargs):
 	existing_order = get_user_pending_order(request)
 	things= Order.objects.filter(owner=user_profile, is_ordered=False)
 	ping=get_object_or_404(delivery)
-	addon=adress.objects.filter(own=user_profile)
+	adon = get_object_or_404(adress,own=user_profile)
 	context = {
 		'order': existing_order,
 		'things':things,
 		'ping':ping,
 		'local':user_profile,
-		'addon':addon,
+		'adon':adon,
 	}
 	return render(request, 'order_summary.html', context)
 
@@ -416,9 +411,44 @@ def update_transaction_records(request, token):
     # send an email to the customer
     # look at tutorial on how to send emails with sendgrid
     messages.info(request, "Thank you! Your purchase was successful!")
-    return redirect(reverse('accounts:my_profile'))
+    return redirect(reverse('my_profile'))
 
 
 def success(request, **kwargs):
     # a view signifying the transcation was successful
     return render(request, 'purchase_success.html', {})
+
+
+
+
+
+def cash(request):	
+	usr=get_object_or_404(Profile, user=request.user)
+	detail=Order.objects.filter(owner=usr)
+	detail.is_ordered=True
+	detail.ref_code=number
+	detail.filter(owner=usr).all().update(is_ordered=True,ref_code=number)
+	det=Order.objects.filter(owner=usr).filter(id=1)
+	print(det)
+	for items in det:
+		# print(items.items.filter(id=1))
+		ordered.it=det
+
+
+
+
+
+
+
+	# emailvalue=ui
+	# username=request.user.username
+	# num=number
+	# num.str()
+	# htmly = 'Your order number is '+ number
+	# d = { 'username': username } 
+	# subject, from_email, to = 'welcome','coolbinary69@gmail.com', emailvalue  
+	# html_content = htmly
+	# msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
+	# msg.attach_alternative(html_content, "text / html")
+	# msg.send()
+	return redirect(reverse('nav'))

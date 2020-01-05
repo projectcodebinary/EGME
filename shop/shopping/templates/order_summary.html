@@ -58,7 +58,7 @@
    <div class="crt">
       <div class="cart">
         <div class="lt"><p class="min"><strong>My Cart({{order.total}})</strong></p></div>
-        <div class="rt"><p class="min1"><strong>Shipping Adress <br> {{addon.addr}} </strong></p></div>
+        <div class="rt"><p class="min1"><strong>Shipping Pincode : &nbsp; <span class="sp">{{adon.addr}} &nbsp; ({{adon.nam}})</span> </strong></p></div>
         </div>
         {% if order.total >= 1 %}
       <div class="itm">
@@ -113,6 +113,16 @@
 
 
 <style>
+
+
+.sp{
+color:green;
+font-size: large;
+font-weight:lighter ;
+
+}
+
+
 .itmm{
   margin-top: 10%;
   margin-left: auto;
@@ -136,11 +146,10 @@
   height: 5%;
   width:30%;
   margin-right: 45%;
-  // background-color: aquamarine;
 }
 .in{
     width: 80%;
-    background-color: aliceblue;
+    background-color: white;
     height: 40%;
     margin-left: auto;
     margin-right: auto;
@@ -305,7 +314,7 @@
     height: 12%;
     grid-column-gap: 5%;
     width: 80%;
-    background-color: aqua;
+    background-color: oldlace;
   }
   
 

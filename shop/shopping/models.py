@@ -57,10 +57,13 @@ class adress(models.Model):
     phone=models.IntegerField(max_length=10)
 
     def addr(self):
-        return self.add
+        return self.pincode
 
     def phn(self):
         return self.phone
+    
+    def nam(self):
+        return self.name
 
 def post_save_profile_create(sender,instance,created,*args,**kwargs):
     user_profile,created=Profile.objects.get_or_create(user=instance)
@@ -144,4 +147,11 @@ class Transaction(models.Model):
 
     class Meta:
         ordering = ['-timestamp']
+
+class ordered(models.Model):
+    buyer=models.ForeignKey(Profile,on_delete=models.CASCADE)
+    it=models.ManyToManyField(OrderItem)
+
+    def __str__(self):
+        return str(self.buyer)
 
