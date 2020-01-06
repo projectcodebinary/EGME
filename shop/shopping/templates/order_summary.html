@@ -106,12 +106,14 @@
          <hr class="bom">
 
          <h3 class="vim"> Price ( {{order.total}} items ) :- &nbsp;  ₹ {{order.get_cart_total}} </h3>
-         <h3 class="vim"> Delivery charges :- &nbsp; ₹ {{ping.charge}}  &nbsp; </h3>
+         <h3 class="vim"> Delivery charges :- &nbsp; ₹ {% if order.total >= 1 %} {{ping.charge}} {% else %} 0 {% endif %}&nbsp; </h3>
          <hr class="bomm">
-        <div><h3 class="vim"> <div class="fr">Total Payable :- </div> <div class="yt">&nbsp; ₹ <script type="text/javascript">document.write(tot)</script></div></h3>
+        <div><h3 class="vim"> <div class="fr">Total Payable :- </div> <div class="yt">&nbsp; ₹ {% if order.total >= 1 %}<script type="text/javascript">document.write(tot)</script>{% else %} 0 {% endif %}</div></h3>
         <hr class="bomm">
         <h3 class="vim"> <i>You will save &nbsp; ₹ {{order.get_cart_totall}} on this order</i> </h3>
+        {% if order.total >= 1 %}
         <button type="submit" onclick="location.href='{% url 'cash' %}'; alone();" class="bug"> Click to order with cash on delivery !!</button>
+        {% endif %}
       </div></div>
 
 </div>
