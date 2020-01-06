@@ -426,29 +426,21 @@ def cash(request):
 	usr=get_object_or_404(Profile, user=request.user)
 	detail=Order.objects.filter(owner=usr)
 	detail.is_ordered=True
-	detail.ref_code=number
-	detail.filter(owner=usr).all().update(is_ordered=True,ref_code=number)
-	det=Order.objects.filter(owner=usr).filter(id=1)
-	print(det)
-	for items in det:
-		# print(items.items.filter(id=1))
-		ordered.it=det
+	Order.objects.filter(is_ordered=False,owner=usr).update(ref_code=number)
+	detail.update(is_ordered=True)
+	useer=request.user
+	print(useer)
+	ui=useer.email
+	print(ui)
 
-
-
-
-
-
-
-	# emailvalue=ui
-	# username=request.user.username
-	# num=number
-	# num.str()
-	# htmly = 'Your order number is '+ number
-	# d = { 'username': username } 
-	# subject, from_email, to = 'welcome','coolbinary69@gmail.com', emailvalue  
-	# html_content = htmly
-	# msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
-	# msg.attach_alternative(html_content, "text / html")
-	# msg.send()
+	emailvalue=ui
+	username=request.user.username
+	num=number
+	htmly = get_template('index.html')
+	d = { 'lol': number }
+	subject, from_email, to = number,'coolbinary69@gmail.com', emailvalue  
+	html_content = htmly.render(d)
+	msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
+	msg.attach_alternative(html_content, "text / html")
+	msg.send()
 	return redirect(reverse('nav'))

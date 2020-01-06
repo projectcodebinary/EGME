@@ -16,6 +16,11 @@
           var b = {{ping.charge}}
           var tot=a+b;
         </script>
+        <script type="text/javascript">
+        function alone(){
+        alert("Your order have been received , please check your mail for further details !! Thank you")
+        }
+        </script>
       </head>
 
 
@@ -106,14 +111,23 @@
         <div><h3 class="vim"> <div class="fr">Total Payable :- </div> <div class="yt">&nbsp; ₹ <script type="text/javascript">document.write(tot)</script></div></h3>
         <hr class="bomm">
         <h3 class="vim"> <i>You will save &nbsp; ₹ {{order.get_cart_totall}} on this order</i> </h3>
-        <button type="submit" onclick="location.href='{% url 'checkout' %}'"> Checkout</button>
+        <button type="submit" onclick="location.href='{% url 'cash' %}'; alone();" class="bug"> Click to order with cash on delivery !!</button>
       </div></div>
 
 </div>
 
 
 <style>
-
+.bug{
+  height: 8%;
+  margin-left:30%;
+  margin-top: 7%;
+  color: #322f32;
+  background-color: orange;
+  border: none;
+  font-weight: bolder;
+  cursor: pointer;
+}
 
 .sp{
 color:green;
