@@ -54,7 +54,7 @@ class adress(models.Model):
     landmark = models.TextField()
     city=models.TextField()
     state=models.TextField()
-    phone=models.IntegerField(max_length=10)
+    phone=models.IntegerField(max_length=10,default= 1000000000)
 
     def addr(self):
         return self.pincode
