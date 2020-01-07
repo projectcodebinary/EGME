@@ -1,0 +1,8 @@
+<html>
+        {% load crispy_forms_tags %}
+    <form method="POST">
+            {% csrf_token %}
+        {{forms|crispy}}
+        <button type="submit" >Update Address</button>
+    </form>
+</html>

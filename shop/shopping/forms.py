@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import additem
+from .models import additem,sizes,adress
 from django.contrib.auth.forms import UserCreationForm
 from verified_email_field.forms import VerifiedEmailField
 from django.forms import ModelForm
@@ -13,6 +13,28 @@ class Additem(forms.ModelForm):
         fields = '__all__'
      
         
+class changesize(forms.ModelForm):
+    class Meta:
+        model= sizes
+        fields='__all__'
+        
+
+class address(forms.ModelForm):
+    class Meta:
+        model=adress
+        fields=['add','name','pincode','locality','street','landmark','city','state']
+        widgets = { 
+            'add': forms.Textarea(attrs={'placeholder': 'ADDRESS','class': "fuk"}),
+            'name': forms.Textarea(attrs={'placeholder': 'YOUR NAME','class': "fuk"}),
+            'pincode': forms.Textarea(attrs={'placeholder': 'PINCODE','class': "fuk"}),
+            'locality': forms.Textarea(attrs={'placeholder': 'LOCALITY','class': "fuk"}),
+            'landmark': forms.Textarea(attrs={'placeholder': 'LANDMARK','class': "fuk"}),
+            'street': forms.Textarea(attrs={'placeholder': 'STREET','class': "fuk"}),
+            'city': forms.Textarea(attrs={'placeholder': 'CITY','class': "fuk"}),
+            'state': forms.Textarea(attrs={'placeholder': 'STATE','class': "fuk"}),
+        } 
+
+
 
 class AuthenticationForm(forms.Form):
       username= forms.CharField(widget=forms.TextInput(
@@ -54,7 +76,7 @@ class RegisterForm(UserCreationForm):
             'class':'form-control',
             'placeholder': 'Your Second name',
     }
-))
+))  
 
       password1= forms.CharField(widget=forms.TextInput(
           attrs={
