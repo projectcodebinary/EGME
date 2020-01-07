@@ -160,5 +160,5 @@ EMAIL_USE_TLS=True
 EMAIL_USE_SSL=False
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_HOST_USER='coolbinary69@gmail.com'
-EMAIL_HOST_PASSWORD='cooldude69@'
+EMAIL_HOST_PASSWORD='big_daddy01'
 EMAIL_PORT=587
